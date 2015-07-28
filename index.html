@@ -5,20 +5,37 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,initial-scale=1.0,user-scalable=no">
 	<style type="text/css">
-	html, body {height: 100%;}
-	body, h1 {margin: 0; font-family: "Microsoft Yahei";}
+	html, body {height: 100%; font-family: "Microsoft Yahei"; line-height: 1.5; overflow: hidden; color: #333;}
+	body, h1, p {margin: 0;}
 	.s {position: absolute; width: 100%; height: 100%;}
-	.s1 {background-color: #E9931A; text-align: center; color: rgba(0,0,0,.4);}
-	.s1 h1 {position: absolute; top: 25%; width: 100%; font-size: 3em;}
-	.s2 {background-color: #1691BE;}
+
+	.s1 {background-color: #ea8010;}
+	.s1 p {position: absolute; top: 80%; width: 100%; text-align: center; color: rgba(0,0,0,.5);}
+
+	.s2 {z-index: 1;}
+	.s2 h1 {position: absolute; top: 20%; width: 100%; text-align: center; font-size: 3em; color: rgba(0,0,0,.4);}
+
+	.s3 .d1 {position: absolute; top: 80%; left: 50%; width: 250px; height: 72px; margin-left: -125px; background-color: #56abe4; border-radius: 5px;}
+	.s3 .p1 {position: absolute; top: 20%; width: 100%; text-align: center; color: #56abe4;}
+	.s3 .m1 {width: 64px;}
+	.s3 .div2 {position: absolute; top: 20%; width: 100%; text-align: center; color: #56abe4;}
 	</style>
 </head>
 <body>
 <section class="s s1">
-	<h1>shicha.js</h1>
-	<!-- <p>一款复杂、难用的移动网页视差滚动插件</p> -->
+	<p>一款复杂、难用的<br>移动网页视差滚动插件 -_-|||</p>
 </section>
-<!-- <section class="s s2"></section> -->
+<section class="s s2">
+	<h1>shicha.js</h1>
+</section>
+<section class="s s3">
+	<p class="p1">要做出亮瞎眼的效果<br>你要写很多代码 ╮(╯▽╰)╭</p>
+	<div class="div2">
+		<img class="m1" src="light.png">
+		<p class="p2">它的优点是轻、自由<br>极尽你所想</p>
+	</div>
+	<div class="d1"></div>
+</section>
 
 <script type="text/javascript" src="requestAnimationFrame.js"></script>
 <script type="text/javascript" src="shicha.js"></script>
@@ -29,6 +46,7 @@
 
 	function init () {
 		var height = window.innerHeight;
+		var width = window.innerWidth;
 
 		var shicha = new Shicha({
 			maxTop: height * 2
@@ -41,11 +59,39 @@
 			to: -height
 		});
 
-		shicha.animateTY('.s1 h1', {
+		shicha.animateO('.s1 p', {
+			startTop: 0,
+			duration: height / 4,
+			from: 1,
+			to: 0
+		});
+
+		shicha.animateTY('.s2 h1', {
 			startTop: 0,
 			duration: height,
 			from: 0,
-			to: height * 1.5
+			to: height * 0.6
+		});
+
+		shicha.animateTX('.s3', {
+			startTop: height,
+			duration: height / 2,
+			from: width,
+			to: 0
+		});
+
+		shicha.animateTX('.s3 .p1', {
+			startTop: height,
+			duration: height,
+			from: width,
+			to: -width
+		});
+
+		shicha.animateTX('.s3 .div2', {
+			startTop: height * 1.5,
+			duration: height / 2,
+			from: width,
+			to: 0
 		});
 	};
 </script>

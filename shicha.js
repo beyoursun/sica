@@ -1,7 +1,10 @@
 function Shicha (opt) {
 	this.maxTop = opt.maxTop;
 	this.curTop = 0;
+
+	this.tX = [];
 	this.tY = [];
+	this.o = [];
 	this.fcn = [];
 
 	this.a = 0.001;
@@ -9,8 +12,6 @@ function Shicha (opt) {
 	this.onts = false;
 
 	this.init();
-
-	this.canMove = true;
 }
 
 Shicha.prototype.init = function() {
@@ -27,7 +28,6 @@ Shicha.prototype.init = function() {
 		lastT;
 
 	document.addEventListener('touchstart', function(e) {
-		that.canMove = false;
 		startY = e.touches[0].pageY;
 		offsetY = 0;
 
@@ -62,9 +62,31 @@ Shicha.prototype.init = function() {
 		that.animateTop(that.curTop);
 		// that.addTransition();
 		that.onts = false;
-		// that.canMove = true;
 		that.inertia(lastY / lastT);
 	});
+};
+
+Shicha.prototype.animateTX = function(selector, opt) {
+	var hasone = false;
+
+	this.tX.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var tX = document.querySelector(selector);
+		opt.ele = tX;
+		opt.selector = selector;
+		this.tX.push(opt);
+	}
+
+	this.animateTop(this.curTop);
 };
 
 Shicha.prototype.animateTY = function(selector, opt) {
@@ -81,15 +103,37 @@ Shicha.prototype.animateTY = function(selector, opt) {
 	});
 
 	if (!hasone) {
-		var o = document.querySelector(selector);
-		opt.ele = o;
+		var tY = document.querySelector(selector);
+		opt.ele = tY;
 		opt.selector = selector;
-
 		this.tY.push(opt);
 	}
 
 	this.animateTop(this.curTop);
 };
+
+Shicha.prototype.animateO = function(selector, opt) {
+	var hasone = false;
+
+	this.o.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var o = document.querySelector(selector);
+		opt.ele = o;
+		opt.selector = selector;
+		this.o.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
 
 Shicha.prototype.animateFcn = function(selector, callback) {
 	var hasone = false;
@@ -107,7 +151,7 @@ Shicha.prototype.animateFcn = function(selector, callback) {
 			callback: callback
 		};
 		this.fcn.push(obj);
-	}
+	};
 };
 
 // 惯性
@@ -151,6 +195,17 @@ Shicha.prototype.inertia = function(v0) {
 };
 
 Shicha.prototype.animateTop = function(top) {
+	this.tX.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.webkitTransform = 'translate3d(' + item.from + 'px,0,0)';
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.webkitTransform = 'translate3d(' + item.to + 'px,0,0)';
+		} else {
+			var tX = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.webkitTransform = 'translate3d(' + tX + 'px,0,0)';
+		};
+	});
+
 	this.tY.forEach(function(item) {
 		if (top < item.startTop) {
 			item.ele.style.webkitTransform = 'translate3d(0,' + item.from + 'px,0)';
@@ -159,14 +214,23 @@ Shicha.prototype.animateTop = function(top) {
 		} else {
 			var tY = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
 			item.ele.style.webkitTransform = 'translate3d(0,' + tY + 'px,0)';
-		}
+		};
+	});
+
+	this.o.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.opacity = item.from;
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.opacity = item.to;
+		} else {
+			var o = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.opacity = o;
+		};
 	});
 
 	this.fcn.forEach(function(item) {
 		item.callback(top);
 	});
-
-	// this.curTop = top;
 };
 
 Shicha.prototype.addTransition = function() {
