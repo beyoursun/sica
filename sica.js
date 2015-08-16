@@ -1,17 +1,18 @@
-function Shicha (opt) {
-	this.maxTop = opt.maxTop;
+function Shicha () {
+	this.maxTop;
 	this.curTop = 0;
-
-	this.tX = [];
 	this.tY = [];
-	this.o = [];
 	this.fcn = [];
+	this.flows = document.querySelectorAll('.sc-flow'); // 基础滚动流
 
-	this.a = 0.001;
+	this.a = 0.002;
 
 	this.onts = false;
 
+	this.on = true;
+
 	this.init();
+	this.refresh();
 }
 
 Shicha.prototype.init = function() {
@@ -28,6 +29,8 @@ Shicha.prototype.init = function() {
 		lastT;
 
 	document.addEventListener('touchstart', function(e) {
+		if (!that.on) return;
+
 		startY = e.touches[0].pageY;
 		offsetY = 0;
 
@@ -42,6 +45,7 @@ Shicha.prototype.init = function() {
 
 	document.addEventListener('touchmove', function(e) {
 		e.preventDefault();
+		if (!that.on) return;
 
 		curY = e.touches[0].pageY;
 		curT = +new Date();
@@ -57,36 +61,15 @@ Shicha.prototype.init = function() {
 	});
 
 	document.addEventListener('touchend', function() {
-		that.setTop(that.curTop + offsetY);
+		if (!that.on) return;
+
+		if (Math.abs(offsetY) > 20 & that.setTop(that.curTop + offsetY) == 0) {
+			that.onts = false;
+			that.inertia(lastY / lastT);
+		};
 
 		that.animateTop(that.curTop);
-		// that.addTransition();
-		that.onts = false;
-		that.inertia(lastY / lastT);
 	});
-};
-
-Shicha.prototype.animateTX = function(selector, opt) {
-	var hasone = false;
-
-	this.tX.forEach(function(item) {
-		if (item.selector == selector) {
-			item.startTop = opt.startTop;
-			item.duration = opt.duration;
-			item.from = opt.from;
-			item.to = opt.to;
-			hasone = true;
-		}
-	});
-
-	if (!hasone) {
-		var tX = document.querySelector(selector);
-		opt.ele = tX;
-		opt.selector = selector;
-		this.tX.push(opt);
-	}
-
-	this.animateTop(this.curTop);
 };
 
 Shicha.prototype.animateTY = function(selector, opt) {
@@ -99,41 +82,19 @@ Shicha.prototype.animateTY = function(selector, opt) {
 			item.from = opt.from;
 			item.to = opt.to;
 			hasone = true;
-		}
-	});
-
-	if (!hasone) {
-		var tY = document.querySelector(selector);
-		opt.ele = tY;
-		opt.selector = selector;
-		this.tY.push(opt);
-	}
-
-	this.animateTop(this.curTop);
-};
-
-Shicha.prototype.animateO = function(selector, opt) {
-	var hasone = false;
-
-	this.o.forEach(function(item) {
-		if (item.selector == selector) {
-			item.startTop = opt.startTop;
-			item.duration = opt.duration;
-			item.from = opt.from;
-			item.to = opt.to;
-			hasone = true;
-		}
+		};
 	});
 
 	if (!hasone) {
 		var o = document.querySelector(selector);
 		opt.ele = o;
 		opt.selector = selector;
-		this.o.push(opt);
+
+		this.tY.push(opt);
 	}
 
 	this.animateTop(this.curTop);
-}
+};
 
 Shicha.prototype.animateFcn = function(selector, callback) {
 	var hasone = false;
@@ -183,7 +144,8 @@ Shicha.prototype.inertia = function(v0) {
 		if (v0 * vt > 0) {
 			s = v0 * t + a * t * t / 2;
 
-			that.setTop(that.curTop - s)
+			that.setTop(that.curTop - s);
+			that.rmTransition();
 			that.animateTop(that.curTop);
 
 			v0 = vt;
@@ -195,36 +157,14 @@ Shicha.prototype.inertia = function(v0) {
 };
 
 Shicha.prototype.animateTop = function(top) {
-	this.tX.forEach(function(item) {
-		if (top < item.startTop) {
-			// item.ele.style.webkitTransform = 'translate3d(' + item.from + 'px,0,0)';
-		} else if (top > item.startTop + item.duration) {
-			// item.ele.style.webkitTransform = 'translate3d(' + item.to + 'px,0,0)';
-		} else {
-			var tX = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
-			item.ele.style.webkitTransform = 'translate3d(' + tX + 'px,0,0)';
-		};
-	});
-
 	this.tY.forEach(function(item) {
 		if (top < item.startTop) {
-			// item.ele.style.webkitTransform = 'translate3d(0,' + item.from + 'px,0)';
+			item.ele.style.webkitTransform = 'translate3d(0,' + item.from + 'px,0)';
 		} else if (top > item.startTop + item.duration) {
-			// item.ele.style.webkitTransform = 'translate3d(0,' + item.to + 'px,0)';
+			item.ele.style.webkitTransform = 'translate3d(0,' + item.to + 'px,0)';
 		} else {
 			var tY = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
 			item.ele.style.webkitTransform = 'translate3d(0,' + tY + 'px,0)';
-		};
-	});
-
-	this.o.forEach(function(item) {
-		if (top < item.startTop) {
-			// item.ele.style.opacity = item.from;
-		} else if (top > item.startTop + item.duration) {
-			// item.ele.style.opacity = item.to;
-		} else {
-			var o = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
-			item.ele.style.opacity = o;
 		};
 	});
 
@@ -235,11 +175,11 @@ Shicha.prototype.animateTop = function(top) {
 
 Shicha.prototype.addTransition = function() {
 	this.tY.forEach(function(item) {
-		item.ele.style.webkitTransition = 'all .4s';
+		item.ele.style.webkitTransition = 'all .2s';
 	});
 
 	this.fcn.forEach(function(item) {
-		item.ele.style.webkitTransition = 'all .4s';
+		item.ele.style.webkitTransition = 'all .2s';
 	});
 };
 
@@ -256,10 +196,70 @@ Shicha.prototype.rmTransition = function() {
 Shicha.prototype.setTop = function(top) {
 	if (top < 0) {
 		this.curTop = 0;
+		this.addTransition();
+		return -1;
 	} else if (top > this.maxTop) {
 		this.curTop = this.maxTop;
+		this.addTransition();
+		return 1;
 	} else {
 		this.curTop = top;
-	}
-}
+		return 0;
+	};
+};
 
+Shicha.prototype.stop = function() {
+	this.on = false;
+};
+
+Shicha.prototype.start = function() {
+	this.on = true;
+};
+
+// 基础滚动流重绘
+Shicha.prototype.refresh = function() {
+	var that = this;
+	var h = window.innerHeight;
+	that.maxTop = -h;
+
+	for (var i = 0; i < that.flows.length; i++) {
+		that.flows[i].classList.add('sc-flow' + i);
+		that.flows[i].h = getAllHeight(that.flows[i], getNum);
+		that.maxTop += that.flows[i].h;
+		
+		var startTop = -h;
+		for (var j = 0; j < i; j++) {
+			startTop += that.flows[j].h;
+		};
+
+		var duration = h + that.flows[i].h;
+
+		var from = h;
+
+		var to = -that.flows[i].h
+
+		that.animateTY('.sc-flow' + i, {
+			startTop: startTop,
+			duration: duration,
+			from: from,
+			to: to
+		});
+	};
+
+	// 获取元素所占区域高度
+	function getAllHeight (ele, callback) {
+		var style = window.getComputedStyle(ele);
+		return callback(style.height)
+			+ callback(style.paddingTop)
+			+ callback(style.paddingBottom)
+			+ callback(style.borderTopWidth)
+			+ callback(style.borderBottomWidth)
+			+ callback(style.marginTop)
+			+ callback(style.marginBottom);
+	};
+
+	// 获取数字
+	function getNum (string) {
+		return +string.substring(0, string.length - 2);
+	};
+};

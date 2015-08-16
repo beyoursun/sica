@@ -29,7 +29,7 @@
 	<h1>shicha.js</h1>
 </section>
 <section class="s s3">
-	<p class="p1">要做出亮瞎眼的效果<br>你要写很多代码 ╮(╯▽╰)╭</p>
+	<p class="p1 p1_a2">要做出亮瞎眼的效果<br>你要写很多代码 ╮(╯▽╰)╭</p>
 	<div class="div2">
 		<img class="m1" src="light.png">
 		<p class="p2">它的优点是轻、自由<br>极尽你所想</p>
@@ -82,17 +82,24 @@
 
 		shicha.animateTX('.s3 .p1', {
 			startTop: height,
-			duration: height,
-			from: width,
-			to: -width
-		});
-
-		shicha.animateTX('.s3 .div2', {
-			startTop: height * 1.5,
 			duration: height / 2,
 			from: width,
 			to: 0
 		});
+
+		shicha.animateTY('.s3 .p1_a2', {
+			startTop: height * 1.5,
+			duration: height / 2,
+			from: 0,
+			to: -height / 2
+		});
+
+		// shicha.animateTX('.s3 .div2', {
+		// 	startTop: height * 1.5,
+		// 	duration: height / 2,
+		// 	from: width,
+		// 	to: 0
+		// });
 	};
 </script>
 </body>
