@@ -2,21 +2,63 @@
 <html>
 <head>
 	<title></title>
+	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width,user-scalable=no">
 	<style type="text/css">
-	html, body {height: 100%; margin: 0;}
-	.s {position: absolute; width: 100%; height: 100%;}
+	html, body {height: 100%; margin: 0; overflow: hidden; font-family: "Microsoft Yahei";}
+	.s {position: absolute; width: 100%; height: 100%; color: #fff; text-align: center;}
 	.s:nth-child(1) {background-color: #F44336;}
-	.s:nth-child(2) {background-color: #3F51B5;}
-	.s:nth-child(3) {background-color: #4CAF50;}
-	.s:nth-child(4) {background-color: #FF9800;}
+	.s:nth-child(2) {background-color: #FF9800;}
+	.s:nth-child(3) {background-color: #FFEB3B;}
+	.s:nth-child(4) {background-color: #4CAF50;}
+	.s:nth-child(5) {background-color: #448AFF;}
+	.s:nth-child(6) {background-color: #673AB7;}
+	.s:nth-child(7) {background-color: #9C27B0;}
+	.next {position: absolute; left: 50%; bottom: 20px; margin-left: -12px;}
+	.next:before {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2);}
+	.next:after {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2); margin-top: 5px;}
+	.box {position: absolute; left: 50%; top: 40%; width: 160px; line-height: 160px; margin: -80px 0 0 -80px; border-radius: 10px; background-color: rgba(255,255,255,.9); box-shadow: 0 5px 20px rgba(0,0,0,.1);}
+
+	.s1 .title {margin-top: 40%;}
+	.s1 .desc {color: rgba(255,255,255,.8);}
+	.s2 .box {color: #FF9800;}
+	.s3 .box {color: #FFEB3B;}
+	.s4 .box {color: #4CAF50;}
+	.s5 .box {color: #448AFF;}
+	.s6 .box {color: #673AB7;}
+	.s7 .box {color: #9C27B0; line-height: 1.5; padding: 44px 0;}
 	</style>
 </head>
 <body>
-<section class="s sc-flow"></section>
-<section class="s sc-flow"></section>
-<section class="s sc-flow"></section>
-<section class="s sc-flow"></section>
+<section class="s sc-flow s1">
+	<h1 class="title">Shicha.js</h1>
+	<p class="desc">A simple parallax scrolling tools</p>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s2">
+	<h2 class="box">translateY</h2>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s3">
+	<h2 class="box">translateX</h2>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s4">
+	<h2 class="box">scale</h2>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s5">
+	<h2 class="box">rotate</h2>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s6">
+	<h2 class="box">opacity</h2>
+	<div class="next"></div>
+</section>
+<section class="s sc-flow s7">
+	<h2 class="box">CSS<br>Animation</h2>
+	<div class="next"></div>
+</section>
 
 <script type="text/javascript" src="sica.js"></script>
 <script type="text/javascript">
