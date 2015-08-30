@@ -62,11 +62,13 @@
 </section>
 
 <section class="s sc-flow s6">
+	<div class="box_dash"></div>
 	<h2 class="box">opacity</h2>
 	<div class="next"></div>
 </section>
 
 <section class="s sc-flow s7">
+	<div class="box_dash"></div>
 	<h2 class="box">CSS<br>Animation</h2>
 	<div class="next"></div>
 </section>
@@ -93,6 +95,20 @@
 
 	sc.animateScale('.s4 .box', {
 		startTop: wHeight * 2,
+		duration: wHeight,
+		from: 0,
+		to: 1
+	});
+
+	sc.animateRotate('.s5 .box', {
+		startTop: wHeight * 3,
+		duration: wHeight,
+		from: -90,
+		to: 0
+	});
+
+	sc.animateOpacity('.s6 .box', {
+		startTop: wHeight * 4,
 		duration: wHeight,
 		from: 0,
 		to: 1

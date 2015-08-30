@@ -5,6 +5,8 @@ function Shicha () {
 	this.tY = [];
 	this.tX = [];
 	this.scale = [];
+	this.rotate = [];
+	this.opacity = [];
 	this.fcn = [];
 
 	this.flows = document.querySelectorAll('.sc-flow'); // 基础滚动流
@@ -146,6 +148,52 @@ Shicha.prototype.animateScale = function(selector, opt) {
 	this.animateTop(this.curTop);
 }
 
+Shicha.prototype.animateRotate = function(selector, opt) {
+	var hasone = false;
+
+	this.rotate.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var rotate = document.querySelector(selector);
+		opt.ele = rotate;
+		opt.selector = selector;
+		this.rotate.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
+
+Shicha.prototype.animateOpacity = function(selector, opt) {
+	var hasone = false;
+
+	this.opacity.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var opacity = document.querySelector(selector);
+		opt.ele = opacity;
+		opt.selector = selector;
+		this.opacity.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
+
 Shicha.prototype.animateFcn = function(selector, callback) {
 	var hasone = false;
 
@@ -237,6 +285,28 @@ Shicha.prototype.animateTop = function(top) {
 		} else {
 			var scale = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
 			item.ele.style.webkitTransform = 'scale(' + scale + ')';
+		};
+	});
+
+	this.rotate.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + item.from + 'deg)';
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + item.to + 'deg)';
+		} else {
+			var rotate = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + rotate + 'deg)';
+		};
+	});
+
+	this.opacity.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.opacity = item.from;
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.opacity = item.to;
+		} else {
+			var opacity = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.opacity = opacity;
 		};
 	});
 
