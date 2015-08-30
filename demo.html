@@ -6,6 +6,7 @@
 	<meta name="viewport" content="width=device-width,user-scalable=no">
 	<style type="text/css">
 	html, body {height: 100%; margin: 0; overflow: hidden; font-family: "Microsoft Yahei";}
+	.github {z-index: 100; position: fixed; top: 10px; right: 10px; display: block; width: 32px; height: 32px; background-size: 32px auto; background-image: url(data:image/png;base64,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);}
 	.s {position: absolute; width: 100%; height: 100%; color: #fff; text-align: center;}
 	.s:nth-child(1) {background-color: #F44336;}
 	.s:nth-child(2) {background-color: #FF9800;}
@@ -18,7 +19,7 @@
 	.next:before {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2);}
 	.next:after {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2); margin-top: 5px;}
 	.box {position: absolute; left: 50%; top: 40%; width: 160px; line-height: 160px; margin: -80px 0 0 -80px; border-radius: 10px; background-color: rgba(255,255,255,.9); box-shadow: 0 5px 20px rgba(0,0,0,.1);}
-
+	.box_dash {position: absolute; left: 50%; top: 40%; width: 160px; height: 160px; margin: -80px 0 0 -80px; border: 2px dashed #fff; border-radius: 10px; box-sizing: border-box;}
 	.s1 .title {margin-top: 40%;}
 	.s1 .desc {color: rgba(255,255,255,.8);}
 	.s2 .box {color: #FF9800;}
@@ -26,7 +27,9 @@
 	.s4 .box {color: #4CAF50;}
 	.s5 .box {color: #448AFF;}
 	.s6 .box {color: #673AB7;}
-	.s7 .box {color: #9C27B0; line-height: 1.5; padding: 44px 0;}
+	.s7 .box {opacity: 0; color: #9C27B0; line-height: 1.5; padding: 44px 0;}
+	.s7.sc-active .box {-webkit-animation: flipInX 1s .5s both; animation: flipInX 1s .5s both;}
+	@-webkit-keyframes flipInX{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg)}0%,40%{-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg)}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}to{opacity:1;-webkit-transform:perspective(400px);transform:perspective(400px)}}@keyframes flipInX{0%{opacity:0;-webkit-transform:perspective(400px) rotate3d(1,0,0,90deg);transform:perspective(400px) rotate3d(1,0,0,90deg)}0%,40%{-webkit-animation-timing-function:ease-in;animation-timing-function:ease-in}40%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-20deg);transform:perspective(400px) rotate3d(1,0,0,-20deg)}60%{opacity:1;-webkit-transform:perspective(400px) rotate3d(1,0,0,10deg);transform:perspective(400px) rotate3d(1,0,0,10deg)}80%{-webkit-transform:perspective(400px) rotate3d(1,0,0,-5deg);transform:perspective(400px) rotate3d(1,0,0,-5deg)}to{opacity:1;-webkit-transform:perspective(400px);transform:perspective(400px)}}
 	</style>
 </head>
 <body>
@@ -35,34 +38,85 @@
 	<p class="desc">A simple parallax scrolling tools</p>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s2">
+	<div class="box_dash"></div>
 	<h2 class="box">translateY</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s3">
+	<div class="box_dash"></div>
 	<h2 class="box">translateX</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s4">
+	<div class="box_dash"></div>
 	<h2 class="box">scale</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s5">
+	<div class="box_dash"></div>
 	<h2 class="box">rotate</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s6">
+	<div class="box_dash"></div>
 	<h2 class="box">opacity</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s7">
+	<div class="box_dash"></div>
 	<h2 class="box">CSS<br>Animation</h2>
 	<div class="next"></div>
 </section>
 
+<a href="https://github.com/beyoursun/sica" class="github"></a>
+
 <script type="text/javascript" src="sica.js"></script>
 <script type="text/javascript">
-	new Shicha();
+	var sc = new Shicha();
+	var wHeight = window.innerHeight,
+		wWidth = window.innerWidth;
+
+	sc.animateTY('.s2 .box', {
+		startTop: 0,
+		duration: wHeight,
+		from: wHeight,
+		to: 0
+	});
+
+	sc.animateTX('.s3 .box', {
+		startTop: wHeight,
+		duration: wHeight,
+		from: -wWidth,
+		to: 0
+	});
+
+	sc.animateScale('.s4 .box', {
+		startTop: wHeight * 2,
+		duration: wHeight,
+		from: 0,
+		to: 1
+	});
+
+	sc.animateRotate('.s5 .box', {
+		startTop: wHeight * 3,
+		duration: wHeight,
+		from: -90,
+		to: 0
+	});
+
+	sc.animateOpacity('.s6 .box', {
+		startTop: wHeight * 4,
+		duration: wHeight,
+		from: 0,
+		to: 1
+	});
 </script>
 </body>
 </html>

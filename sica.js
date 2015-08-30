@@ -1,8 +1,14 @@
 function Shicha () {
 	this.maxTop;
 	this.curTop = 0;
+
 	this.tY = [];
+	this.tX = [];
+	this.scale = [];
+	this.rotate = [];
+	this.opacity = [];
 	this.fcn = [];
+
 	this.flows = document.querySelectorAll('.sc-flow'); // 基础滚动流
 
 	this.a = 0.002;
@@ -94,7 +100,99 @@ Shicha.prototype.animateTY = function(selector, opt) {
 	}
 
 	this.animateTop(this.curTop);
-};
+}
+
+Shicha.prototype.animateTX = function(selector, opt) {
+	var hasone = false;
+
+	this.tX.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var tX = document.querySelector(selector);
+		opt.ele = tX;
+		opt.selector = selector;
+		this.tX.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
+
+Shicha.prototype.animateScale = function(selector, opt) {
+	var hasone = false;
+
+	this.scale.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var scale = document.querySelector(selector);
+		opt.ele = scale;
+		opt.selector = selector;
+		this.scale.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
+
+Shicha.prototype.animateRotate = function(selector, opt) {
+	var hasone = false;
+
+	this.rotate.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var rotate = document.querySelector(selector);
+		opt.ele = rotate;
+		opt.selector = selector;
+		this.rotate.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
+
+Shicha.prototype.animateOpacity = function(selector, opt) {
+	var hasone = false;
+
+	this.opacity.forEach(function(item) {
+		if (item.selector == selector) {
+			item.startTop = opt.startTop;
+			item.duration = opt.duration;
+			item.from = opt.from;
+			item.to = opt.to;
+			hasone = true;
+		}
+	});
+
+	if (!hasone) {
+		var opacity = document.querySelector(selector);
+		opt.ele = opacity;
+		opt.selector = selector;
+		this.opacity.push(opt);
+	}
+
+	this.animateTop(this.curTop);
+}
 
 Shicha.prototype.animateFcn = function(selector, callback) {
 	var hasone = false;
@@ -157,6 +255,8 @@ Shicha.prototype.inertia = function(v0) {
 };
 
 Shicha.prototype.animateTop = function(top) {
+	var wHeight = window.innerHeight;
+
 	this.tY.forEach(function(item) {
 		if (top < item.startTop) {
 			item.ele.style.webkitTransform = 'translate3d(0,' + item.from + 'px,0)';
@@ -165,6 +265,56 @@ Shicha.prototype.animateTop = function(top) {
 		} else {
 			var tY = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
 			item.ele.style.webkitTransform = 'translate3d(0,' + tY + 'px,0)';
+		}
+
+		if (top > item.startTop && top < item.startTop + item.duration) {
+			item.ele.classList.add('sc-active');
+		} else {
+			item.ele.classList.remove('sc-active');
+		}
+	});
+
+	this.tX.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.webkitTransform = 'translate3d(' + item.from + 'px,0,0)';
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.webkitTransform = 'translate3d(' + item.to + 'px,0,0)';
+		} else {
+			var tX = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.webkitTransform = 'translate3d(' + tX + 'px,0,0)';
+		};
+	});
+
+	this.scale.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.webkitTransform = 'scale(' + item.from + ')';
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.webkitTransform = 'scale(' + item.to + ')';
+		} else {
+			var scale = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.webkitTransform = 'scale(' + scale + ')';
+		};
+	});
+
+	this.rotate.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + item.from + 'deg)';
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + item.to + 'deg)';
+		} else {
+			var rotate = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.webkitTransform = 'rotate3d(0,0,1,' + rotate + 'deg)';
+		};
+	});
+
+	this.opacity.forEach(function(item) {
+		if (top < item.startTop) {
+			item.ele.style.opacity = item.from;
+		} else if (top > item.startTop + item.duration) {
+			item.ele.style.opacity = item.to;
+		} else {
+			var opacity = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
+			item.ele.style.opacity = opacity;
 		};
 	});
 
