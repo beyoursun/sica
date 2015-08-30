@@ -255,6 +255,8 @@ Shicha.prototype.inertia = function(v0) {
 };
 
 Shicha.prototype.animateTop = function(top) {
+	var wHeight = window.innerHeight;
+
 	this.tY.forEach(function(item) {
 		if (top < item.startTop) {
 			item.ele.style.webkitTransform = 'translate3d(0,' + item.from + 'px,0)';
@@ -263,7 +265,13 @@ Shicha.prototype.animateTop = function(top) {
 		} else {
 			var tY = (top - item.startTop) / item.duration * (item.to - item.from) + item.from;
 			item.ele.style.webkitTransform = 'translate3d(0,' + tY + 'px,0)';
-		};
+		}
+
+		if (top > item.startTop && top < item.startTop + item.duration) {
+			item.ele.classList.add('sc-active');
+		} else {
+			item.ele.classList.remove('sc-active');
+		}
 	});
 
 	this.tX.forEach(function(item) {
