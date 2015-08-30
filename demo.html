@@ -18,6 +18,7 @@
 	.next:before {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2);}
 	.next:after {content: ""; display: block; width: 24px; height: 2px; background-color: rgba(0,0,0,.2); margin-top: 5px;}
 	.box {position: absolute; left: 50%; top: 40%; width: 160px; line-height: 160px; margin: -80px 0 0 -80px; border-radius: 10px; background-color: rgba(255,255,255,.9); box-shadow: 0 5px 20px rgba(0,0,0,.1);}
+	.box_dash {position: absolute; left: 50%; top: 40%; width: 160px; height: 160px; margin: -80px 0 0 -80px; border: 2px dashed #fff; border-radius: 10px; box-sizing: border-box;}
 
 	.s1 .title {margin-top: 40%;}
 	.s1 .desc {color: rgba(255,255,255,.8);}
@@ -35,26 +36,36 @@
 	<p class="desc">A simple parallax scrolling tools</p>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s2">
+	<div class="box_dash"></div>
 	<h2 class="box">translateY</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s3">
+	<div class="box_dash"></div>
 	<h2 class="box">translateX</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s4">
+	<div class="box_dash"></div>
 	<h2 class="box">scale</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s5">
+	<div class="box_dash"></div>
 	<h2 class="box">rotate</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s6">
 	<h2 class="box">opacity</h2>
 	<div class="next"></div>
 </section>
+
 <section class="s sc-flow s7">
 	<h2 class="box">CSS<br>Animation</h2>
 	<div class="next"></div>
@@ -62,7 +73,30 @@
 
 <script type="text/javascript" src="sica.js"></script>
 <script type="text/javascript">
-	new Shicha();
+	var sc = new Shicha();
+	var wHeight = window.innerHeight,
+		wWidth = window.innerWidth;
+
+	sc.animateTY('.s2 .box', {
+		startTop: 0,
+		duration: wHeight,
+		from: wHeight,
+		to: 0
+	});
+
+	sc.animateTX('.s3 .box', {
+		startTop: wHeight,
+		duration: wHeight,
+		from: -wWidth,
+		to: 0
+	});
+
+	sc.animateScale('.s4 .box', {
+		startTop: wHeight * 2,
+		duration: wHeight,
+		from: 0,
+		to: 1
+	});
 </script>
 </body>
 </html>
